@@ -1,0 +1,157 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Arial",sans-serif;}
+.MsoChpDefault
+	{font-family:"Arial",sans-serif;}
+.MsoPapDefault
+	{line-height:115%;}
+@page WordSection1
+	{size:595.45pt 841.7pt;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal><span lang=ru>// Анимация появления элементов при скролле</span></p>
+
+<p class=MsoNormal><span lang=ru>const observerOptions = {</span></p>
+
+<p class=MsoNormal><span lang=ru>    threshold: 0.1,</span></p>
+
+<p class=MsoNormal><span lang=ru>    rootMargin: '0px 0px -50px 0px'</span></p>
+
+<p class=MsoNormal><span lang=ru>};</span></p>
+
+<p class=MsoNormal><span lang=ru>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=ru>const observer = new
+IntersectionObserver((entries) =&gt; {</span></p>
+
+<p class=MsoNormal><span lang=ru>    entries.forEach(entry =&gt; {</span></p>
+
+<p class=MsoNormal><span lang=ru>        if (entry.isIntersecting) {</span></p>
+
+<p class=MsoNormal><span lang=ru>           
+entry.target.classList.add('visible');</span></p>
+
+<p class=MsoNormal><span lang=ru>        }</span></p>
+
+<p class=MsoNormal><span lang=ru>    });</span></p>
+
+<p class=MsoNormal><span lang=ru>}, observerOptions);</span></p>
+
+<p class=MsoNormal><span lang=ru>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=ru>// Наблюдаем за всеми элементами с анимацией</span></p>
+
+<p class=MsoNormal><span lang=ru>document.querySelectorAll('.feature-card,
+.case-study, .offering-card, .faq-item').forEach(el =&gt; {</span></p>
+
+<p class=MsoNormal><span lang=ru>    observer.observe(el);</span></p>
+
+<p class=MsoNormal><span lang=ru>});</span></p>
+
+<p class=MsoNormal><span lang=ru>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=ru>// Плавная прокрутка к якорям</span></p>
+
+<p class=MsoNormal><span lang=ru>document.querySelectorAll('a[href^=&quot;#&quot;]').forEach(anchor
+=&gt; {</span></p>
+
+<p class=MsoNormal><span lang=ru>    anchor.addEventListener('click', function
+(e) {</span></p>
+
+<p class=MsoNormal><span lang=ru>        e.preventDefault();</span></p>
+
+<p class=MsoNormal><span lang=ru>        const targetId = this.getAttribute('href');</span></p>
+
+<p class=MsoNormal><span lang=ru>        if (targetId === '#') return;</span></p>
+
+<p class=MsoNormal><span lang=ru>        const targetElement =
+document.querySelector(targetId);</span></p>
+
+<p class=MsoNormal><span lang=ru>        if (targetElement) {</span></p>
+
+<p class=MsoNormal><span lang=ru>            window.scrollTo({</span></p>
+
+<p class=MsoNormal><span lang=ru>                top: targetElement.offsetTop -
+80,</span></p>
+
+<p class=MsoNormal><span lang=ru>                behavior: 'smooth'</span></p>
+
+<p class=MsoNormal><span lang=ru>            });</span></p>
+
+<p class=MsoNormal><span lang=ru>        }</span></p>
+
+<p class=MsoNormal><span lang=ru>    });</span></p>
+
+<p class=MsoNormal><span lang=ru>});</span></p>
+
+<p class=MsoNormal><span lang=ru>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=ru>// Анимация чисел в статистике (если есть
+статистика в коде)</span></p>
+
+<p class=MsoNormal><span lang=ru>function animateValue(element, start, end,
+duration) {</span></p>
+
+<p class=MsoNormal><span lang=ru>    let startTimestamp = null;</span></p>
+
+<p class=MsoNormal><span lang=ru>    const step = (timestamp) =&gt; {</span></p>
+
+<p class=MsoNormal><span lang=ru>        if (!startTimestamp) startTimestamp =
+timestamp;</span></p>
+
+<p class=MsoNormal><span lang=ru>        const progress = Math.min((timestamp -
+startTimestamp) / duration, 1);</span></p>
+
+<p class=MsoNormal><span lang=ru>        const value = Math.floor(progress *
+(end - start) + start);</span></p>
+
+<p class=MsoNormal><span lang=ru>        element.textContent = value +
+(element.textContent.includes('+') ? '+' : '');</span></p>
+
+<p class=MsoNormal><span lang=ru>        if (progress &lt; 1) {</span></p>
+
+<p class=MsoNormal><span lang=ru>           
+window.requestAnimationFrame(step);</span></p>
+
+<p class=MsoNormal><span lang=ru>        }</span></p>
+
+<p class=MsoNormal><span lang=ru>    };</span></p>
+
+<p class=MsoNormal><span lang=ru>    window.requestAnimationFrame(step);</span></p>
+
+<p class=MsoNormal><span lang=ru>}</span></p>
+
+<p class=MsoNormal><span lang=ru>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=ru>/* ... весь остальной JS из твоего
+&lt;script&gt; ... */</span></p>
+
+</div>
+
+</body>
+
+</html>
